@@ -8,7 +8,7 @@ class Circle:
         self.color = color
         self.radius = radius
         self.circle_x = random.randint(50, 450)
-        self.circle_y = random.randint(50, 450)
+        self.circle_y = random.randint(100, 450)
 
     def draw_circle(self):
         """
@@ -50,5 +50,4 @@ class Circle:
         :param y2: int
         :return: int
         """
-        return (((x2 - x1)**2) + ((y2 - y1)**2))**(1/2)
-
+        return (((x2 - x1) ** 2) + ((y2 - y1) ** 2)) ** (1 / 2)

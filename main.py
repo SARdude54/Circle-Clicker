@@ -1,8 +1,10 @@
 import pygame
 import sys
 from circle import Circle
+from game_timer import Timer
 
 clock = pygame.time.Clock()
+timer = Timer(clock)
 
 from pygame.locals import *
 
@@ -24,6 +26,8 @@ circle = Circle(screen, (255, 0, 0), 50)
 
 score = 0
 
+timer.set_timer(0, 10)
+
 
 def run_game_events(mx, my):
     """
@@ -37,7 +41,7 @@ def run_game_events(mx, my):
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == MOUSEBUTTONDOWN and circle.mouse_collide(mx, my):
+        if event.type == MOUSEBUTTONDOWN and circle.mouse_collide(mx, my) and not timer.is_finished():
             score += 1
             circle.delete()
             circle = Circle(screen, (255, 0, 0), 50)
@@ -47,6 +51,12 @@ def run_game_events(mx, my):
 def main():
     global circle, score
     while True:
+        timer.start()
+
+        timer_text = font.render(timer.get_time(), True, (255, 0, 0))
+        timer_text_rect = timer_text.get_rect()
+        timer_text_rect.center = ((WINDOW_SIZE[0]/2) - (timer_text_rect.width/2), 50)
+
         score_text = font.render(f"Score: {score}", True, (0, 0, 255))
         score_text_rect = score_text.get_rect()
         score_text_rect.center = (600, 20)
@@ -54,10 +64,17 @@ def main():
         screen.fill((0, 0, 0))
         screen.blit(title, title_rect)
         screen.blit(score_text, score_text_rect)
+        screen.blit(timer_text, timer_text_rect)
 
         mx, my = pygame.mouse.get_pos()
 
         circle.draw_circle()
+
+        if timer.is_finished():
+            circle.delete()
+            screen.fill((0, 0, 0))
+            score_text_rect.center = ((WINDOW_SIZE[0]/2), (WINDOW_SIZE[1]/2))
+            screen.blit(score_text, score_text_rect)
 
         run_game_events(mx, my)
 

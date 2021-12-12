@@ -2,25 +2,26 @@ import pygame
 import sys
 from circle import Circle
 from game_timer import Timer
+from window import Window
+from text import Text
 
 clock = pygame.time.Clock()
 timer = Timer(clock)
 
+
 from pygame.locals import *
 
 WINDOW_SIZE = (700, 500)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
 
 pygame.init()
-screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
-pygame.display.set_caption("Circle Clicker")
+
+screen = Window(WINDOW_SIZE, "Circle Clicker").get_screen()
+
+title_text = Text("Circle Clicker", "arcade_font.TTF", 32, (100, 20), BLUE)
 
 font = pygame.font.Font("arcade_font.TTF", 32)
-
-title = font.render("Circle Clicker", True, (0, 0, 255))
-title_rect = title.get_rect()
-title_rect.center = (100, 20)
-
-display = pygame.Surface((700, 500))
 
 circle = Circle(screen, (255, 0, 0), 50)
 
@@ -52,19 +53,14 @@ def main():
     global circle, score
     while True:
         timer.start()
+        timer_text = Text(timer.get_time(), "arcade_font.TTF", 32, (350, 20), RED, None)
 
-        timer_text = font.render(timer.get_time(), True, (255, 0, 0))
-        timer_text_rect = timer_text.get_rect()
-        timer_text_rect.center = ((WINDOW_SIZE[0]/2) - (timer_text_rect.width/2), 50)
-
-        score_text = font.render(f"Score: {score}", True, (0, 0, 255))
-        score_text_rect = score_text.get_rect()
-        score_text_rect.center = (600, 20)
+        score_text = Text(f"Score: {score}", "arcade_font.TTF", 32, (600, 20), (0, 0, 255))
 
         screen.fill((0, 0, 0))
-        screen.blit(title, title_rect)
-        screen.blit(score_text, score_text_rect)
-        screen.blit(timer_text, timer_text_rect)
+        screen.blit(title_text.get_text(), title_text.get_text_rect())
+        screen.blit(score_text.get_text(), score_text.get_text_rect())
+        screen.blit(timer_text.get_text(), timer_text.get_text_rect())
 
         mx, my = pygame.mouse.get_pos()
 
@@ -73,8 +69,8 @@ def main():
         if timer.is_finished():
             circle.delete()
             screen.fill((0, 0, 0))
-            score_text_rect.center = ((WINDOW_SIZE[0]/2), (WINDOW_SIZE[1]/2))
-            screen.blit(score_text, score_text_rect)
+            score_text.get_text_rect().center = ((WINDOW_SIZE[0]/2), (WINDOW_SIZE[1]/2))
+            screen.blit(score_text.get_text(), score_text.get_text_rect())
 
         run_game_events(mx, my)
 

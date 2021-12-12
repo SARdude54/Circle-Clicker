@@ -1,11 +1,11 @@
 import pygame
 import sys
 
-from circle import Circle
-from game_timer import Timer
-from window import Window
-from text import Text
-from button import Button
+from scripts.circle import Circle
+from scripts.game_timer import Timer
+from scripts.window import Window
+from scripts.text import Text
+from scripts.button import Button
 
 clock = pygame.time.Clock()
 timer = Timer(clock)
@@ -20,14 +20,14 @@ pygame.init()
 
 screen = Window(WINDOW_SIZE, "Circle Clicker").get_screen()
 
-title_text = Text("Circle Clicker", "arcade_font.TTF", 32, (100, 20), BLUE)
+title_text = Text("Circle Clicker", "assets/arcade_font.TTF", 32, (100, 20), BLUE)
 
-font = pygame.font.Font("arcade_font.TTF", 32)
+font = pygame.font.Font("assets/arcade_font.TTF", 32)
 
 circle = Circle(screen, (255, 0, 0), 50)
 
-start_img = pygame.image.load("start.png")
-exit_img = pygame.image.load("exit.png")
+start_img = pygame.image.load("assets/start.png")
+exit_img = pygame.image.load("assets/exit.png")
 
 start_btn = Button(WINDOW_SIZE[0] / 2 - 65, WINDOW_SIZE[1] / 2 - 80, start_img, 1)
 exit_btn = Button(WINDOW_SIZE[0] / 2 - 50, WINDOW_SIZE[1] / 2 - 30, exit_img, 1)
@@ -73,9 +73,9 @@ def main():
                 run = False
         else:
             timer.start()
-            timer_text = Text(timer.get_time(), "arcade_font.TTF", 32, (350, 20), RED, None)
+            timer_text = Text(timer.get_time(), "assets/arcade_font.TTF", 32, (350, 20), RED, None)
 
-            score_text = Text(f"Score: {score}", "arcade_font.TTF", 32, (600, 20), (0, 0, 255))
+            score_text = Text(f"Score: {score}", "assets/arcade_font.TTF", 32, (600, 20), (0, 0, 255))
 
             screen.fill((0, 0, 0))
             screen.blit(title_text.get_text(), title_text.get_text_rect())

@@ -29,8 +29,8 @@ circle = Circle(screen, (255, 0, 0), 50)
 start_img = pygame.image.load("assets/start.png")
 exit_img = pygame.image.load("assets/exit.png")
 
-start_btn = Button(WINDOW_SIZE[0] / 2 - 65, WINDOW_SIZE[1] / 2 - 80, start_img, 1)
-exit_btn = Button(WINDOW_SIZE[0] / 2 - 50, WINDOW_SIZE[1] / 2 - 30, exit_img, 1)
+start_btn = Button(WINDOW_SIZE[0] / 2 - 65, WINDOW_SIZE[1] / 2 - 70, start_img, 1)
+exit_btn = Button(WINDOW_SIZE[0] / 2 - 50, WINDOW_SIZE[1] / 2 - 20, exit_img, 1)
 
 score = 0
 
@@ -67,18 +67,24 @@ def main():
         mx, my = pygame.mouse.get_pos()
 
         if not start_game:
+
+            title_text.set_font_size("Circle Clicker", 64)
+            title_text.set_center_cords((WINDOW_SIZE[0]/2, 50))
+            screen.blit(title_text.get_text(), title_text.get_text_rect())
+
             if start_btn.draw(screen):
                 start_game = True
             if exit_btn.draw(screen):
                 run = False
+
         else:
+
             timer.start()
-            timer_text = Text(timer.get_time(), "assets/arcade_font.TTF", 32, (350, 20), RED, None)
+            timer_text = Text(timer.get_time(), "assets/arcade_font.TTF", 32, (30, 20), RED, None)
 
             score_text = Text(f"Score: {score}", "assets/arcade_font.TTF", 32, (600, 20), (0, 0, 255))
 
             screen.fill((0, 0, 0))
-            screen.blit(title_text.get_text(), title_text.get_text_rect())
             screen.blit(score_text.get_text(), score_text.get_text_rect())
             screen.blit(timer_text.get_text(), timer_text.get_text_rect())
 

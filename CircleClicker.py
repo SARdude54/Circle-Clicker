@@ -7,10 +7,10 @@ from scripts.window import Window
 from scripts.text import Text
 from scripts.button import Button
 
+from pygame.locals import *
+
 clock = pygame.time.Clock()
 timer = Timer(clock)
-
-from pygame.locals import *
 
 WINDOW_SIZE = (700, 500)
 BLUE = (0, 0, 255)
@@ -20,7 +20,7 @@ pygame.init()
 
 screen = Window(WINDOW_SIZE, "Circle Clicker").get_screen()
 
-title_text = Text(WINDOW_SIZE[0]//2 - 180, 20, "Circle Clicker", "assets/arcade_font.TTF", 64, BLUE)
+title_text = Text(WINDOW_SIZE[0] // 2 - 180, 20, "Circle Clicker", "assets/arcade_font.TTF", 64, BLUE)
 
 circle = Circle(screen, (255, 0, 0), 50)
 

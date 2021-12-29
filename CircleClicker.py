@@ -18,7 +18,7 @@ RED = (255, 0, 0)
 
 pygame.init()
 
-screen = Window(WINDOW_SIZE, "Cqircle Clicker").get_screen()
+screen = Window(WINDOW_SIZE, "Circle Clicker").get_screen()
 
 title_text = Text(WINDOW_SIZE[0] // 2 - 180, 20, "Circle Clicker", "assets/arcade_font.TTF", 64, BLUE)
 

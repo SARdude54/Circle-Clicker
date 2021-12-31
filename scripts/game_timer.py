@@ -3,6 +3,10 @@ import pygame
 
 class Timer:
     def __init__(self, clock: pygame.time.Clock()):
+        """
+        init new timer
+        :param clock: pygame.time.Clock()
+        """
         self.time = None
         self.clock = clock
         self.milliseconds = self.clock.get_time()
@@ -12,6 +16,10 @@ class Timer:
         self.finished = False
 
     def start(self):
+        """
+        starts the timer
+        :return: None
+        """
         if self.seconds_first == 0 and self.seconds_tenth == 0 and self.minutes == 0:
             self.finished = True
         if self.milliseconds >= 500:
@@ -28,6 +36,12 @@ class Timer:
         self.milliseconds += self.clock.tick_busy_loop(60)
 
     def set_timer(self, init_min, init_sec):
+        """
+        sets the timer
+        :param init_min: int
+        :param init_sec: int
+        :return: None
+        """
         if init_sec < 10:
             init_sec_str = f"0{init_sec}"
         else:

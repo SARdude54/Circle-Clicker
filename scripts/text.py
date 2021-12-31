@@ -4,6 +4,17 @@ import pygame
 class Text:
     def __init__(self, x, y, text, font_file: str, font_size: int, text_color: tuple, background_text_color=None):
 
+        """
+        Init new text
+        :param x: int
+        :param y: int
+        :param text: str
+        :param font_file: str
+        :param font_size: int
+        :param text_color: tuple[int]
+        :param background_text_color: tuple[int]
+        """
+
         self.x = x
         self.y = y
 
@@ -21,15 +32,33 @@ class Text:
         self.text_rect.x = x
         self.text_rect.y = y
 
-    def delete(self, screen, screen_size):
+    def delete(self, screen: pygame.Surface, screen_size: tuple):
+        """
+        Deletes text by drawing a black square over it
+        :param screen: pygame.Surface
+        :param screen_size: tuple[int]
+        :return: None
+        """
         rect = pygame.Rect(self.text_rect.x, self.text_rect.y,  self.text_rect.width, self.text_rect.height )
         pygame.draw.rect(screen, (255, 0, 0), rect)
 
     def set_cords(self, x, y):
+        """
+        Sets the coordinates of the text object
+        :param x: int
+        :param y: int
+        :return: None
+        """
         self.text_rect.x = x
         self.text_rect.y = y
 
     def set_font_size(self, text, font_size):
+        """
+        Sets the font size of text
+        :param text: str
+        :param font_size: int
+        :return: None
+        """
         self.font_size = font_size
         self.font = pygame.font.Font(self.font_file, self.font_size)
         self.text = self.font.render(text, True, self.text_color)

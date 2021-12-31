@@ -4,6 +4,12 @@ import random
 
 class Circle:
     def __init__(self, screen, color, radius):
+        """
+        init a circle object
+        :param screen: pygame.Screen
+        :param color: tuple
+        :param radius: int
+        """
         self.screen = screen
         self.color = color
         self.radius = radius
@@ -29,6 +35,10 @@ class Circle:
         return False
 
     def delete(self):
+        """
+        deletes a circle by drawing a black square over it
+        :return: None
+        """
         rect = pygame.Rect(self.circle_x - 50, self.circle_y - 50, 100, 100)
         pygame.draw.rect(self.screen, (0, 0, 0), rect)
 

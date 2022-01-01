@@ -2,13 +2,13 @@ import pygame
 
 
 class Text:
-    def __init__(self, x, y, text, font_file: str, font_size: int, text_color: tuple, background_text_color=None):
+    def __init__(self, x, y, text_str, font_file: str, font_size: int, text_color: tuple, background_text_color=None):
 
         """
         Init new text
         :param x: int
         :param y: int
-        :param text: str
+        :param text_str: str
         :param font_file: str
         :param font_size: int
         :param text_color: tuple[int]
@@ -17,13 +17,14 @@ class Text:
 
         self.x = x
         self.y = y
+        self.text_str = text_str
 
         self.font_file = font_file
         self.font_size = font_size
         self.text_color = text_color
         self.background_text_color = background_text_color
         self.font = pygame.font.Font(font_file, font_size)
-        self.text = self.font.render(text, True, self.text_color)
+        self.text = self.font.render(text_str, True, self.text_color)
         self.text_rect = self.text.get_rect()
 
         self.text_rect.x = self.x
@@ -32,14 +33,13 @@ class Text:
         self.text_rect.x = x
         self.text_rect.y = y
 
-    def delete(self, screen: pygame.Surface, screen_size: tuple):
+    def delete(self, screen: pygame.Surface):
         """
         Deletes text by drawing a black square over it
         :param screen: pygame.Surface
-        :param screen_size: tuple[int]
         :return: None
         """
-        rect = pygame.Rect(self.text_rect.x, self.text_rect.y,  self.text_rect.width, self.text_rect.height )
+        rect = pygame.Rect(self.text_rect.x, self.text_rect.y,  self.text_rect.width, self.text_rect.height)
         pygame.draw.rect(screen, (255, 0, 0), rect)
 
     def set_cords(self, x, y):
@@ -63,6 +63,11 @@ class Text:
         self.font = pygame.font.Font(self.font_file, self.font_size)
         self.text = self.font.render(text, True, self.text_color)
         self.text_rect = self.text.get_rect()
+
+    def set_color(self, color, background_color=None):
+        self.text_color = color
+        self.background_text_color = background_color
+        self.text = self.font.render(self.text_str, True, self.text_color)
 
     def get_text_rect(self):
         return self.text_rect

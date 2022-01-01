@@ -1,6 +1,8 @@
 import pygame
 import random
 
+from scripts.func import distance
+
 
 class Circle:
     def __init__(self, screen, color, radius):
@@ -30,7 +32,7 @@ class Circle:
         :param my: int
         :return: bool
         """
-        if Circle.distance(self.circle_x, mx, self.circle_y, my) <= 50:
+        if distance(self.circle_x, mx, self.circle_y, my) <= 50:
             return True
         return False
 
@@ -43,21 +45,7 @@ class Circle:
         pygame.draw.rect(self.screen, (0, 0, 0), rect)
 
     def set_color(self, color):
-        """
-        Sets color of circle
-        :param color: tuple[int, int, int]
-        :return: None
-        """
         self.color = color
 
-    @staticmethod
-    def distance(x1, x2, y1, y2):
-        """
-        Calculates distance
-        :param x1: int
-        :param x2: int
-        :param y1: int
-        :param y2: int
-        :return: int
-        """
-        return (((x2 - x1) ** 2) + ((y2 - y1) ** 2)) ** (1 / 2)
+    def set_radius(self, radius):
+        self.radius = radius

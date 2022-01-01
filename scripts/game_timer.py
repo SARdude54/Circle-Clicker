@@ -14,12 +14,14 @@ class Timer:
         self.seconds_tenth = 0
         self.minutes = 0
         self.finished = False
+        self.started = False
 
     def start(self):
         """
         starts the timer
         :return: None
         """
+        self.started = True
         if self.seconds_first == 0 and self.seconds_tenth == 0 and self.minutes == 0:
             self.finished = True
         if self.milliseconds >= 500:
@@ -47,7 +49,6 @@ class Timer:
         else:
             init_sec_str = str(init_sec)
         self.minutes = init_min
-        print(init_sec)
         self.seconds_tenth = int(init_sec_str[0])
         self.seconds_first = int(init_sec_str[1])
 
@@ -56,3 +57,6 @@ class Timer:
 
     def is_finished(self):
         return self.finished
+
+    def is_started(self):
+        return self.started

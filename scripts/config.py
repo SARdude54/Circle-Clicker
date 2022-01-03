@@ -10,9 +10,11 @@ clock = pygame.time.Clock()
 timer = Timer(clock)
 
 WINDOW_SIZE = (700, 500)
+BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+YELLOW = (253, 236, 0)
 
 pygame.init()
 
@@ -20,7 +22,7 @@ screen = Window(WINDOW_SIZE, "Circle Clicker").get_screen()
 
 FONT = "assets/dpcomic.ttf"
 
-title_text = Text(WINDOW_SIZE[0] // 2 - 180, 20, "Circle Clicker", FONT, 64, BLUE)
+title_text = Text(WINDOW_SIZE[0] // 2 - 326//2, 20, "Circle Clicker", FONT, 64, BLUE)
 
 level = "EASY"
 
@@ -38,8 +40,9 @@ start_btn = TextButton(screen.get_width() // 2 - 32, 250, 1, "Start", FONT, 32, 
 activity_btn = TextButton(screen.get_width() // 2 - 45, 300, 1, "Activity", FONT, 32, BLUE)
 exit_btn = TextButton(screen.get_width() // 2 - 22, 350, 1, "Exit", FONT, 32, BLUE)
 
-print(exit_btn.get_rect().width)
+menu_btn = TextButton(screen.get_width() // 2 - 59//2, 250, 1, "Menu", FONT, 32, BLUE)
 
+selected_level_text = Text(100, 100, "Level: " + level.title(), FONT, 32, GREEN)
 
 score = 0
 

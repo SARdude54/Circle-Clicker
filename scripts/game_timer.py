@@ -24,6 +24,9 @@ class Timer:
         self.started = True
         if self.seconds_first == 0 and self.seconds_tenth == 0 and self.minutes == 0:
             self.finished = True
+        if self.time == f"0:10":
+            self.finished = False
+
         if self.milliseconds >= 500:
             self.seconds_first -= 1
             if self.seconds_first == -1 and self.seconds_tenth == 0:
@@ -36,6 +39,9 @@ class Timer:
             self.milliseconds -= 500
         self.time = f"{self.minutes}:{self.seconds_tenth}{self.seconds_first}"
         self.milliseconds += self.clock.tick_busy_loop(60)
+
+        if self.seconds_first == 0:
+            self.started = False
 
     def set_timer(self, init_min, init_sec):
         """

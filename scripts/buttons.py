@@ -114,6 +114,9 @@ class TextButton:
             self.text.set_color(selected_color)
             self.selected = True
 
+    def set_y(self, y):
+        self.rect.y = self.y = y
+
     def is_selected(self):
         return self.selected
 

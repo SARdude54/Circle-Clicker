@@ -18,14 +18,17 @@ def run_game_events(mx, my):
         if event.type == MOUSEBUTTONDOWN and circle.mouse_collide(mx, my) and timer.is_started() and not timer.is_finished():
             score += 1
             circle.delete()
-            circle = Circle(screen, (255, 0, 0), None)
+            circle = Circle(screen, RED, None)
             if level == "EASY":
+                selected_level_text.set_color(GREEN)
                 circle.set_radius(50)
 
             elif level == "MEDIUM":
+                selected_level_text.set_color(YELLOW)
                 circle.set_radius(30)
 
             elif level == "HARD":
+                selected_level_text.set_color(RED)
                 circle.set_radius(10)
 
             circle.draw_circle()
@@ -35,9 +38,12 @@ start_game = False
 
 
 def main():
-    global start_game, level
+    global start_game, level, score
     run = True
     while run:
+        if timer.get_time() == f"0:10":
+            score = 0
+
         mx, my = pygame.mouse.get_pos()
 
         if not start_game:
@@ -74,6 +80,7 @@ def main():
             hard_btn.draw(screen)
 
             if start_btn.draw(screen):
+                timer.set_timer(0, 10)
                 start_game = True
 
             if activity_btn.draw(screen):
@@ -86,9 +93,11 @@ def main():
             timer.start()
             timer_text = Text(30, 20, timer.get_time(), FONT, 32, RED, None)
 
-            score_text = Text(550, 20, f"Score: {score}", FONT, 32, GREEN)
+            exit_btn.set_y(350)
 
-            screen.fill((0, 0, 0))
+            score_text = Text(550, 20, f"Score: {score}", FONT, 32, BLUE)
+
+            screen.fill(BLACK)
             screen.blit(score_text.get_text(), score_text.get_text_rect())
             screen.blit(timer_text.get_text(), timer_text.get_text_rect())
 
@@ -105,9 +114,21 @@ def main():
 
             if timer.is_finished():
                 circle.delete()
-                screen.fill((0, 0, 0))
-                score_text.get_text_rect().center = ((WINDOW_SIZE[0] // 2), (WINDOW_SIZE[1] / 2))
-                screen.blit(score_text.get_text(), score_text.get_text_rect())
+                screen.fill(BLACK)
+                score_text.get_text_rect().center = 350, 150
+                score_text.draw(screen)
+                selected_level_text.set_text("Level: " + level.title())
+                selected_level_text.center_x(screen)
+                selected_level_text.set_y(200)
+                selected_level_text.draw(screen)
+                exit_btn.set_y(300)
+                if menu_btn.draw(screen):
+                    screen.fill(BLACK)
+                    exit_btn.set_y(350)
+                    start_game = False
+
+                if exit_btn.draw(screen):
+                    pygame.quit()
 
         run_game_events(mx, my)
 

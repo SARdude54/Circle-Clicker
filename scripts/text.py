@@ -30,8 +30,8 @@ class Text:
         self.text_rect.x = self.x
         self.text_rect.y = self.y
 
-        self.text_rect.x = x
-        self.text_rect.y = y
+    def draw(self, screen: pygame.Surface):
+        screen.blit(self.get_text(), self.get_text_rect())
 
     def delete(self, screen: pygame.Surface):
         """
@@ -41,6 +41,16 @@ class Text:
         """
         rect = pygame.Rect(self.text_rect.x, self.text_rect.y,  self.text_rect.width, self.text_rect.height)
         pygame.draw.rect(screen, (255, 0, 0), rect)
+
+    def center_x(self, surface: pygame.Surface):
+        self.text_rect.x = self.x = surface.get_width() // 2 - self.get_width() // 2
+
+    def set_y(self, y):
+        self.text_rect.y = self.y = y
+
+    def set_text(self, text_str):
+        self.text_str = text_str
+        self.text = self.font.render(text_str, True, self.text_color)
 
     def set_cords(self, x, y):
         """

@@ -4,8 +4,8 @@ import pygame
 class Timer:
     def __init__(self, clock: pygame.time.Clock()):
         """
-        init new timer
-        :param clock: pygame.time.Clock()
+        Initialize new timer object
+        :param clock: pygame.time.Clock
         """
         self.time = None
         self.clock = clock

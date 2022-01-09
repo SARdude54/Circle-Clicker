@@ -1,5 +1,7 @@
 import pygame
 
+pygame.font.init()
+
 
 class Text:
     def __init__(self, x, y, text_str, font_file: str, font_size: int, text_color: tuple, background_text_color=None):
@@ -40,7 +42,7 @@ class Text:
         :return: None
         """
         rect = pygame.Rect(self.text_rect.x, self.text_rect.y,  self.text_rect.width, self.text_rect.height)
-        pygame.draw.rect(screen, (255, 0, 0), rect)
+        pygame.draw.rect(screen, (0, 0, 0), rect)
 
     def center_x(self, surface: pygame.Surface):
         self.text_rect.x = self.x = surface.get_width() // 2 - self.get_width() // 2

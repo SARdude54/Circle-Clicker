@@ -1,6 +1,46 @@
-from scripts.config import *
+import sys
 
+import pygame.gfxdraw
+
+from scripts.config import *
+from scripts.func import draw_activity_widget, clear_data, read_json, append_game_data
 from pygame.locals import *
+
+
+def run_activity_log():
+    running = True
+    data_cleared = False
+
+    game_list: list = read_json(ACTIVITY_DATA_FILE)
+    game_list.reverse()
+
+    while running:
+
+        recent_title_text.draw(screen)
+
+        if back_btn.draw(screen):
+            running = False
+
+        if clear_btn.draw(screen):
+            data_cleared = True
+            clear_data(ACTIVITY_DATA_FILE)
+            pygame.draw.rect(screen, BLACK, Rect(0, 90, screen.get_width(), screen.get_height() - 90))
+
+        if not data_cleared:
+
+            for i in range(len(game_list)):
+                draw_activity_widget(i*100 + 100, screen, game_list[i]["score"], game_list[i]["level"], game_list[i]["date"])
+                if i == 3:
+                    break
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
+    screen.fill(BLACK)
 
 
 def run_game_events(mx, my):
@@ -11,14 +51,17 @@ def run_game_events(mx, my):
     :return: None
     """
     global circle, score
+    # game events
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
 
+        # Mouse events for circle
         if event.type == MOUSEBUTTONDOWN and circle.mouse_collide(mx, my) and timer.is_started() and not timer.is_finished():
             score += 1
             circle.delete()
             circle = Circle(screen, RED, None)
+            # Main menu events---set color of text and radius of circle for each server
             if level == "EASY":
                 selected_level_text.set_color(GREEN)
                 circle.set_radius(50)
@@ -40,7 +83,11 @@ start_game = False
 def main():
     global start_game, level, score
     run = True
+
+    # Main game loop
     while run:
+
+        # reset score
         if timer.get_time() == f"0:10":
             score = 0
 
@@ -84,7 +131,8 @@ def main():
                 start_game = True
 
             if activity_btn.draw(screen):
-                pass
+                screen.fill(BLACK)
+                run_activity_log()
 
             if exit_btn.draw(screen):
                 run = False
@@ -122,16 +170,18 @@ def main():
                 selected_level_text.set_y(200)
                 selected_level_text.draw(screen)
                 exit_btn.set_y(300)
+
                 if menu_btn.draw(screen):
+                    append_game_data(score, level, ACTIVITY_DATA_FILE)
                     screen.fill(BLACK)
                     exit_btn.set_y(350)
                     start_game = False
 
                 if exit_btn.draw(screen):
+                    append_game_data(score, level, ACTIVITY_DATA_FILE)
                     pygame.quit()
-
+                    sys.exit()
         run_game_events(mx, my)
-
         pygame.display.update()
 
         clock.tick(60)
